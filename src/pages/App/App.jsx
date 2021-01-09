@@ -5,6 +5,9 @@ import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utils/userService';
 import NavBar from '../../components/NavBar/NavBar';
+import TermsPage from '../../pages/TermsPage/TermsPage';
+import Footer from '../../components/Footer/Footer';
+import PrivacyPage from '../PrivacyPage/PrivacyPage';
 
 class App extends Component {
   constructor() {
@@ -27,20 +30,23 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-content-holder">
         <NavBar 
         user={this.state.user} 
         handleLogout={this.handleLogout}
         />
         <Switch>
           <Route exact path='/' render={() =>
-           <div>Hello World!</div> 
+            this.state.user ? (
+              <div>Logged in baby!</div>
+            ): (
+              <div>Log in to get started!</div>
+            )
           }/>
           <Route exact path='/signup' render={({ history }) => 
             <SignupPage
               history={history}
               handleSignupOrLogin={this.handleSignupOrLogin}
-              
             />
           }/>
           <Route exact path='/login' render={({history}) => 
@@ -49,7 +55,18 @@ class App extends Component {
               handleSignupOrLogin={this.handleSignupOrLogin}
             />
           }/>
+          <Route exact path='/terms' render={({history}) => 
+            <TermsPage
+              history={history}
+            />
+          }/>
+          <Route exact path='/privacy' render={({history}) => 
+            <PrivacyPage
+              history={history}
+            />
+          }/>
         </Switch>
+        <Footer />
       </div>
     );
   }
